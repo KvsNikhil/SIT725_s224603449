@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Collection</title>
+
+  <!-- Materialize CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+
+<body>
+
+  <nav>
+    <div class="nav-wrapper">
+      <a href="/api/students" class="brand-logo left" onclick="event.preventDefault(); window.location.href='/api/students';">
+        <i class="material-icons">school</i>
+        <span>Student Collection</span>
+      </a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h4 class="center-align">Explore Students</h4>
+
+    <!-- IMPORTANT ID -->
+    <div class="row" id="recipe-section"></div>
+  </div>
+
+  <!-- Student Modal -->
+  <div id="studentModal" class="modal">
+    <div class="modal-content">
+      <h4 id="modalTitle">Student</h4>
+      <p id="modalDescription"></p>
+      <p id="modalUniversity"></p>
+      <p id="modalCourse"></p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="js/scripts.js"></script>
+
+</body>
+</html>
