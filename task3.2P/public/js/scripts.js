@@ -1,3 +1,20 @@
+// Initialize Modal
+const initializeModal = () => {
+  const modalElement = document.getElementById('recipeModal');
+  M.Modal.init(modalElement);
+};
+
+// Open modal with recipe details
+const openRecipeModal = (recipe) => {
+  document.getElementById('modalTitle').textContent = recipe.title;
+  document.getElementById('modalDescription').textContent = recipe.description;
+  document.getElementById('modalImage').src = recipe.image;
+  
+  const modalElement = document.getElementById('recipeModal');
+  const modal = M.Modal.getInstance(modalElement);
+  modal.open();
+};
+
 // Fetch data from API
 const fetchRecipes = () => {
   fetch("/api/recipes")
@@ -36,6 +53,7 @@ const renderRecipeCards = (items) => {
               <i class="material-icons right">close</i>
             </span>
             <p>${item.description}</p>
+            <button class="btn waves-effect waves-light" onclick="openRecipeModal({title: '${item.title}', description: '${item.description}', image: '${item.image}'})">View Details</button>
           </div>
 
         </div>
@@ -48,5 +66,6 @@ const renderRecipeCards = (items) => {
 
 // Run when page loads
 $(document).ready(() => {
+  initializeModal();
   fetchRecipes();
 });

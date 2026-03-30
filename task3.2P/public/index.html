@@ -23,7 +23,10 @@
   <header>
     <nav>
       <div class="nav-wrapper">
-        <span class="brand-logo center">My Recipe Collection</span>
+        <a href="/api/recipes" class="brand-logo left">
+          <i class="material-icons">restaurant_menu</i>
+          <span>My Recipe Collection</span>
+        </a>
       </div>
     </nav>
   </header>
@@ -42,6 +45,18 @@
 
     </div>
   </main>
+
+  <!-- Recipe Modal -->
+  <div id="recipeModal" class="modal">
+    <div class="modal-content">
+      <h4 id="modalTitle">Recipe Title</h4>
+      <p id="modalDescription">Recipe description goes here</p>
+      <img id="modalImage" src="" alt="Recipe" style="width: 100%; max-height: 300px; object-fit: cover;">
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
 
   <!-- jQuery (Required for Materialize & your script) -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

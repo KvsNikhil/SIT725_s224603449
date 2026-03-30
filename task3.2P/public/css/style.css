@@ -2,7 +2,49 @@ body {
   background-color: #f2f2f2;
 }
 
+/* Navbar Logo Styling */
+nav .brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  left: 20px;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: white !important;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  padding: 10px 15px;
+  border-radius: 4px;
+}
+
+nav .brand-logo:hover {
+  opacity: 0.9;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+nav .brand-logo i {
+  font-size: 2rem;
+  vertical-align: middle;
+}
+
+nav .brand-logo span {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* Card Styling */
 .card img {
   height: 200px;
   object-fit: cover;
+  cursor: pointer;
+}
+
+/* Modal Styling */
+.modal {
+  max-width: 600px;
+}
+
+.modal-content img {
+  border-radius: 4px;
+  margin-top: 15px;
 }
