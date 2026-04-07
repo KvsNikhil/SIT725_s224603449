@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Books Catalogue</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      margin: 20px;
+    }
+
+    p {
+      cursor: pointer;
+    }
+
+    p:hover {
+      color: blue;
+    }
+
+    #details {
+      margin-top: 20px;
+      border-top: 1px solid black;
+      padding-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2>Books Catalogue developed by s1234567</h2>
+
+<button onclick="loadBooks()">Get all books</button>
+<button onclick="openAllBooksAPI()">View API (All Books)</button>
+<button onclick="openSingleBookAPI()">View API (Book b1)</button>
+<button onclick="openIntegrity()">Integrity Check</button>
+
+<div id="list"></div>
+<div id="details"></div>
+
+<script>
+async function loadBooks() {
+  const res = await fetch('/api/books');
+  const data = await res.json();
+
+  const list = document.getElementById('list');
+  list.innerHTML = '';
+
+  data.data.forEach(book => {
+    const p = document.createElement('p');
+
+    const price = book.price.$numberDecimal || book.price;
+
+    p.innerHTML = `<b>${book.title}</b> - ${price} AUD`;
+
+    p.onclick = () => loadDetails(book.id);
+
+    list.appendChild(p);
+  });
+}
+
+async function loadDetails(id) {
+  const res = await fetch(`/api/books/${id}`);
+  const data = await res.json();
+
+  const book = data.data;
+  const price = book.price.$numberDecimal || book.price;
+
+  document.getElementById('details').innerHTML = `
+    <h3>${book.title}</h3>
+    <p><b>Author:</b> ${book.author}</p>
+    <p><b>Year:</b> ${book.year}</p>
+    <p><b>Genre:</b> ${book.genre}</p>
+    <p><b>Price:</b> ${price} AUD</p>
+    <p><b>Summary:</b> ${book.summary}</p>
+  `;
+}
+function openAllBooksAPI() {
+  window.open('/api/books', '_blank');
+}
+
+function openSingleBookAPI() {
+  window.open('/api/books/b1', '_blank');
+}
+
+function openIntegrity() {
+  window.open('/api/integrity-check42', '_blank');
+}
+</script>
+
+</body>
+</html>
