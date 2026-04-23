@@ -22,6 +22,7 @@ app.use('/api/books', booksRoutes);
 
 // Integrity check route
 app.get('/api/integrity-check42', (req, res) => {
+  res.set('X-Developed-By', 's224603449');
   res.status(204).send();
 });
 

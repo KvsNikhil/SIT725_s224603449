@@ -22,7 +22,7 @@ const updateBook = async (id, data) => {
   return await Book.findOneAndUpdate(
     { id },
     data,
-    { new: true, runValidators: true }
+    { returnDocument: 'after', runValidators: true, strict: 'throw' }
   );
 };
 

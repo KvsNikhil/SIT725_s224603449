@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const currentYear = new Date().getFullYear();
+
 const BookSchema = new mongoose.Schema({
   id: {
     type: String,
@@ -23,27 +25,34 @@ const BookSchema = new mongoose.Schema({
     type: Number,
     required: true,
     min: 1800,
-    max: new Date().getFullYear()
+    max: currentYear,
+    validate: {
+      validator: Number.isInteger,
+      message: '{VALUE} must be an integer year'
+    }
   },
   genre: {
     type: String,
     required: true,
-    minlength: 3
+    enum: ['Fiction', 'Non-Fiction', 'Mystery', 'Science', 'History', 'Other']
   },
   summary: {
     type: String,
     required: true,
-    minlength: 10,
+    minlength: 20,
     maxlength: 500
   },
   price: {
     type: mongoose.Schema.Types.Decimal128,
     required: true,
     validate: {
-      validator: v => parseFloat(v.toString()) > 0,
-      message: "Price must be positive"
+      validator: v => {
+        const value = parseFloat(v.toString());
+        return Number.isFinite(value) && value >= 0.99 && value <= 999.99;
+      },
+      message: 'Price must be a number between 0.99 and 999.99 AUD'
     }
   }
-}, { strict: "throw" }); //rejects unknown fields
+}, { strict: 'throw' }); // rejects unknown fields
 
 module.exports = mongoose.model('Book', BookSchema);

@@ -128,8 +128,8 @@ function makeValidBook(id) {
     title: "Valid Title",
     author: "Valid Author",
     year: 2020,
-    genre: "Other",
-    summary: "Valid summary text that satisfies your rules.",
+    genre: "Fiction",
+    summary: "Valid summary text that satisfies your rules and is long enough.",
     price: "9.99"
   };
 }
@@ -140,7 +140,7 @@ function makeValidUpdate() {
     author: "Updated Author",
     year: 2021,
     genre: "Other",
-    summary: "Updated summary text.",
+    summary: "Updated summary text that remains valid and sufficiently descriptive.",
     price: "10.50"
   };
 }
@@ -283,6 +283,72 @@ async function run() {
     expected: 400,
     body: { ...makeValidUpdate(), year: "wrong" },
     tags: ["UPDATE_FAIL", "TYPE"]
+  });
+
+  // ---- T11 Invalid genre value ----
+  await test({
+    id: "T11",
+    name: "Invalid genre",
+    method: "POST",
+    path: createPath,
+    expected: 400,
+    body: { ...makeValidBook("b105"), genre: "InvalidGenre" },
+    tags: ["CREATE_FAIL", "BOUNDARY"]
+  });
+
+  // ---- T12 Summary length violation ----
+  await test({
+    id: "T12",
+    name: "Too short summary",
+    method: "POST",
+    path: createPath,
+    expected: 400,
+    body: { ...makeValidBook("b106"), summary: "Too short." },
+    tags: ["CREATE_FAIL", "LENGTH"]
+  });
+
+  // ---- T13 Price boundary violation ----
+  await test({
+    id: "T13",
+    name: "Price below minimum",
+    method: "POST",
+    path: createPath,
+    expected: 400,
+    body: { ...makeValidBook("b107"), price: "0.50" },
+    tags: ["CREATE_FAIL", "BOUNDARY"]
+  });
+
+  // ---- T14 Non-integer year ----
+  await test({
+    id: "T14",
+    name: "Non-integer year",
+    method: "POST",
+    path: createPath,
+    expected: 400,
+    body: { ...makeValidBook("b108"), year: 2020.5 },
+    tags: ["CREATE_FAIL", "TYPE"]
+  });
+
+  // ---- T15 Update not found ----
+  await test({
+    id: "T15",
+    name: "Update missing book",
+    method: "PUT",
+    path: updatePath("b999999"),
+    expected: 404,
+    body: makeValidUpdate(),
+    tags: ["UPDATE_FAIL"]
+  });
+
+  // ---- T16 Successful update ----
+  await test({
+    id: "T16",
+    name: "Valid update",
+    method: "PUT",
+    path: updatePath(uniqueId),
+    expected: 200,
+    body: makeValidUpdate(),
+    tags: []
   });
 
   const pass = logSummary();
