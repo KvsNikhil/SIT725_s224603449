@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator UI</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input, select, button {
+            padding: 10px;
+            margin: 10px;
+        }
+        #result {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Simple Calculator</h1>
+
+    <input type="number" id="num1" placeholder="Enter first number">
+    <input type="number" id="num2" placeholder="Enter second number">
+
+    <br>
+
+    <select id="operation">
+        <option value="add">Add</option>
+        <option value="subtract">Subtract</option>
+        <option value="multiply">Multiply</option>
+        <option value="divide">Divide</option>
+    </select>
+
+    <br>
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div id="result"></div>
+
+    <script>
+        async function calculate() {
+            const a = document.getElementById("num1").value;
+            const b = document.getElementById("num2").value;
+            const op = document.getElementById("operation").value;
+
+            const url = `/api/${op}?a=${a}&b=${b}`;
+
+            try {
+                const res = await fetch(url);
+                const data = await res.json();
+
+                if (data.result !== undefined) {
+                    document.getElementById("result").innerText = "Result: " + data.result;
+                } else {
+                    document.getElementById("result").innerText = "Error: " + data.error;
+                }
+            } catch (err) {
+                document.getElementById("result").innerText = "Something went wrong!";
+            }
+        }
+    </script>
+
+</body>
+</html>
